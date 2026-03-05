@@ -26,7 +26,7 @@ We listen to the stock and option data streams and filter for option quotes pric
 
 ## Probabilistic Framework
 
-Rather than waiting for exact arbitrage (which will never happen nowadays), we develop a probabilistic model to determine a fair bid price for the option &mdash; the maximum we can pay while still expecting a profit in the long run if we assume it to behave purely like a Wiener process (random motion) with historical volatility (big assumption).
+Rather than waiting for exact arbitrage (which will never happen nowadays), we develop a probabilistic model to determine a fair bid price for the option — the maximum we can pay while still expecting a profit in the long run if we assume it to behave purely like a Wiener process (random motion) with historical volatility (big assumption).
 
 ### Stock Price Model
 
@@ -53,35 +53,35 @@ where $\Phi$ is the standard normal CDF. This is valid for thresholds $x < S_0$ 
 </p>
 <p align="center"><em>Figure 2: Probability of the stock price falling below a threshold. Blue: at maturity t = T only. Orange: at any point during [0, T] (reflection principle). Example with S<sub>0</sub> = 17, 2 days to expiration.</em></p>
 
-## P&L Analysis
+## PnL Analysis
 
-### Constructing the P&L Distribution
+### Constructing the PnL Distribution
 
 Given a put option with strike $K$ and the option bid price $o_{bp}$ we pay, the payoff when the stock reaches price $P$ is:
 
-$$\text{P\&L}(P) = \max(K - P,\; 0) - o_{bp}$$
+$$\text{PnL}(P) = \max(K - P,\; 0) - o_{bp}$$
 
-By mapping the threshold probabilities to the corresponding P&L values, we construct:
+By mapping the threshold probabilities to the corresponding PnL values, we construct:
 
-1. **CDF of P&L**: the cumulative distribution of payoffs for different option bid prices
-2. **PDF of P&L**: the derivative of the CDF, giving the probability density of each payoff level
+1. **CDF of PnL**: the cumulative distribution of payoffs for different option bid prices
+2. **PDF of PnL**: the derivative of the CDF, giving the probability density of each payoff level
 
 The integral of the PDF indicates whether a given $o_{bp}$ is fairly priced:
 - Integral $= 1.0$: the option is underpriced (expected profit)
 - Integral $< 0$: the option is overpriced (expected loss)
 
-A risk-neutral option price is achieved when the expected P&L equals zero. Importantly, this does not mean 50% of trades are profitable &mdash; it means the expected dollar return is zero.
+A risk-neutral option price is achieved when the expected PnL equals zero. Importantly, this does not mean 50% of trades are profitable — it means the expected dollar return is zero.
 
 <p align="center">
-  <img src="figures/optimal_option_bid_price_if_retrospective_bidding.png" width="800" alt="P&amp;L Analysis">
+  <img src="figures/optimal_option_bid_price_if_retrospective_bidding.png" width="800" alt="PnL Analysis">
 </p>
-<p align="center"><em>Figure 3: P&amp;L analysis for different option bid prices (o<sub>bp</sub>). <b>Top-left:</b> Probability of reaching threshold (CDF). <b>Top-right:</b> PDF of P&amp;L &mdash; integral = 1.00 for fairly-priced options, negative for overpriced. <b>Bottom-left:</b> CDF of P&amp;L (payoff curves). <b>Bottom-right:</b> The risk-neutral bid price is o<sub>bp</sub> = $1.81, with a profitability threshold of $16.69 and 52.33% probability of profit.</em></p>
+<p align="center"><em>Figure 3: PnL analysis for different option bid prices (o<sub>bp</sub>). <b>Top-left:</b> Probability of reaching threshold (CDF). <b>Top-right:</b> PDF of PnL — integral = 1.00 for fairly-priced options, negative for overpriced. <b>Bottom-left:</b> CDF of PnL (payoff curves). <b>Bottom-right:</b> The risk-neutral bid price is o<sub>bp</sub> = $1.81, with a profitability threshold of $16.69 and 52.33% probability of profit.</em></p>
 
-### Expected P&L Formula
+### Expected PnL Formula
 
-The expected P&L for a given option bid price $o_{bp}$ and stock buying threshold $T$ combines two scenarios:
+The expected PnL for a given option bid price $o_{bp}$ and stock buying threshold $T$ combines two scenarios:
 
-$$\text{P\&L}_T = (1 - P_{\text{cum},T}) \cdot \max(K - S_0 - o_{bp},\; -o_{bp}) \;+\; P_{\text{cum},T} \cdot (K - T - o_{bp})$$
+$$\text{PnL}_T = (1 - P_{\text{cum},T}) \cdot \max(K - S_0 - o_{bp},\; -o_{bp}) \;+\; P_{\text{cum},T} \cdot (K - T - o_{bp})$$
 
 where:
 - $P_{\text{cum},T}$ = probability of the stock reaching threshold $T$ at any point during the option's lifetime
@@ -90,22 +90,22 @@ where:
 
 ## Optimal Bid Price
 
-By evaluating the expected P&L across all combinations of stock buying thresholds and option bid prices, we construct a heatmap:
+By evaluating the expected PnL across all combinations of stock buying thresholds and option bid prices, we construct a heatmap:
 
 <p align="center">
   <img src="figures/diagram6_heatmap_optimal_sigma.png" width="500" alt="Optimal bid price heatmap">
 </p>
-<p align="center"><em>Figure 4: Expected P&amp;L as a function of stock buying threshold (x-axis) and option bid price o<sub>bp</sub> (y-axis). Green = positive expected P&amp;L, red = negative. The <b>black contour</b> marks P&amp;L = 0. The <b>blue line</b> traces the optimal threshold (maximum P&amp;L) for each o<sub>bp</sub>.</em></p>
+<p align="center"><em>Figure 4: Expected PnL as a function of stock buying threshold (x-axis) and option bid price o<sub>bp</sub> (y-axis). Green = positive expected PnL, red = negative. The <b>black contour</b> marks PnL = 0. The <b>blue line</b> traces the optimal threshold (maximum PnL) for each o<sub>bp</sub>.</em></p>
 
 **Key results** for the example ($S_0 = 17$, strike $K = 18.5$, 2 days to expiry):
 
 | Metric | Value |
 |--------|-------|
-| Maximum P&L threshold | T = $16.64 |
+| Maximum PnL threshold | T = $16.64 |
 | Limiting bid price | o_bp = $1.67 |
 | Probability of being profitable | 52.33% |
 
-The limiting bid price of $\$1.67$ is the highest option price that still yields non-negative expected P&L. Any option purchased below this price is expected to be profitable in the long run. Note, how this is more competitive than the $\$1.50$ straight arbitrage price! A fun way to develop this mathematically.
+The limiting bid price of $\$1.67$ is the highest option price that still yields non-negative expected PnL. Any option purchased below this price is expected to be profitable in the long run. Note, how this is more competitive than the $\$1.50$ straight arbitrage price! A fun way to develop this mathematically.
 
 ## Usage
 
@@ -120,7 +120,7 @@ pip install numpy scipy matplotlib
 Both scripts accept CLI parameters and default to the example values used throughout this writeup ($S_0 = 17$, strike $= 18.5$, 2 days, 2% daily volatility).
 
 ```bash
-# Compute P&L distribution across different option bid prices
+# Compute PnL distribution across different option bid prices
 python option_bid_price_model_retrospective_bids.py
 
 # Find optimal stock buying threshold for each bid price (heatmap)
