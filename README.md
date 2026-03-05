@@ -1,7 +1,5 @@
 [![License: CC BY 4.0](https://licensebuttons.net/l/by/4.0/80x15.png)](https://creativecommons.org/licenses/by/4.0/)
 
-[![License: CC BY 4.0](https://licensebuttons.net/l/by/4.0/80x15.png)](https://creativecommons.org/licenses/by/4.0/)
-
 # Option Bid Price Modelling
 
 This was an old project of mine. The idea: Model the option prices as a Wiener process and offer better prices than the straight arbitrage by using the reflection theorem (and making use of the underlying's volatility). With this, I modelled the likelihood of stock prices reaching exercise thresholds during an option's lifetime. See below!
@@ -75,9 +73,9 @@ The integral of the PDF indicates whether a given $o_{bp}$ is fairly priced:
 A risk-neutral option price is achieved when the expected P&L equals zero. Importantly, this does not mean 50% of trades are profitable &mdash; it means the expected dollar return is zero.
 
 <p align="center">
-  <img src="figures/optimal_option_bid_price_if_retrospective_bidding.png" width="800" alt="P&L Analysis">
+  <img src="figures/optimal_option_bid_price_if_retrospective_bidding.png" width="800" alt="P&amp;L Analysis">
 </p>
-<p align="center"><em>Figure 3: P&L analysis for different option bid prices (o<sub>bp</sub>). <b>Top-left:</b> Probability of reaching threshold (CDF). <b>Top-right:</b> PDF of P&L &mdash; integral = 1.00 for fairly-priced options, negative for overpriced. <b>Bottom-left:</b> CDF of P&L (payoff curves). <b>Bottom-right:</b> The risk-neutral bid price is o<sub>bp</sub> = $1.81, with a profitability threshold of $16.69 and 52.33% probability of profit.</em></p>
+<p align="center"><em>Figure 3: P&amp;L analysis for different option bid prices (o<sub>bp</sub>). <b>Top-left:</b> Probability of reaching threshold (CDF). <b>Top-right:</b> PDF of P&amp;L &mdash; integral = 1.00 for fairly-priced options, negative for overpriced. <b>Bottom-left:</b> CDF of P&amp;L (payoff curves). <b>Bottom-right:</b> The risk-neutral bid price is o<sub>bp</sub> = $1.81, with a profitability threshold of $16.69 and 52.33% probability of profit.</em></p>
 
 ### Expected P&L Formula
 
@@ -97,14 +95,14 @@ By evaluating the expected P&L across all combinations of stock buying threshold
 <p align="center">
   <img src="figures/diagram6_heatmap_optimal_sigma.png" width="500" alt="Optimal bid price heatmap">
 </p>
-<p align="center"><em>Figure 4: Expected P&L as a function of stock buying threshold (x-axis) and option bid price o<sub>bp</sub> (y-axis). Green = positive expected P&L, red = negative. The <b>black contour</b> marks P&L = 0. The <b>blue line</b> traces the optimal threshold (maximum P&L) for each o<sub>bp</sub>.</em></p>
+<p align="center"><em>Figure 4: Expected P&amp;L as a function of stock buying threshold (x-axis) and option bid price o<sub>bp</sub> (y-axis). Green = positive expected P&amp;L, red = negative. The <b>black contour</b> marks P&amp;L = 0. The <b>blue line</b> traces the optimal threshold (maximum P&amp;L) for each o<sub>bp</sub>.</em></p>
 
 **Key results** for the example ($S_0 = 17$, strike $K = 18.5$, 2 days to expiry):
 
 | Metric | Value |
 |--------|-------|
-| Maximum P&L threshold | $T = \$16.64$ |
-| Limiting bid price | $o_{bp} = \$1.67$ |
+| Maximum P&L threshold | T = $16.64 |
+| Limiting bid price | o_bp = $1.67 |
 | Probability of being profitable | 52.33% |
 
 The limiting bid price of $\$1.67$ is the highest option price that still yields non-negative expected P&L. Any option purchased below this price is expected to be profitable in the long run. Note, how this is more competitive than the $\$1.50$ straight arbitrage price! A fun way to develop this mathematically.
