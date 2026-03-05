@@ -32,11 +32,15 @@ Rather than waiting for exact arbitrage (which will never happen nowadays), we d
 
 We model the stock price as a random walk (Brownian motion) with variance that scales linearly with time. The historical volatility of the underlying stock over the last $N$ days is:
 
-$$\sigma = \sqrt{\sum r_i^2}$$
+$$
+\sigma = \sqrt{\sum r_i^2}
+$$
 
 The standard Black-Scholes parameters are:
 
-$$d_1 = \frac{\ln(S/K) + (r + \tfrac{\sigma^2}{2})T}{\sigma\sqrt{T}}, \qquad d_2 = d_1 - \sigma\sqrt{T}$$
+$$
+d_1 = \frac{\ln(S/K) + (r + \tfrac{\sigma^2}{2})T}{\sigma\sqrt{T}}, \qquad d_2 = d_1 - \sigma\sqrt{T}
+$$
 
 ### Reflection Principle for American Options
 
@@ -44,7 +48,9 @@ For European options, we only need the probability of the stock being below a th
 
 This is calculated using the **reflection principle of a Wiener process**. The key insight is: after the stock reaches any threshold, its expected move is zero (symmetric random walk), so it is equally likely to end above or below that threshold at maturity. Therefore, the probability of ever reaching a threshold is exactly twice the probability of being beyond it at expiry:
 
-$$P_\text{cum}\!\left(S_t \leq x \text{ for some } t \in [0, T]\right) = \min\!\left(2 \cdot \Phi\!\left(\frac{x - S_0}{\sigma\sqrt{T}}\right),\; 1\right)$$
+$$
+P_\text{cum}\left(S_t \leq x \text{ for some } t \in [0, T]\right) = \min\left(2 \cdot \Phi\left(\frac{x - S_0}{\sigma\sqrt{T}}\right), 1\right)
+$$
 
 where $\Phi$ is the standard normal CDF. This is valid for thresholds $x < S_0$ (downward moves), since for $x \geq S_0$ the probability is trivially 1.
 
@@ -59,7 +65,9 @@ where $\Phi$ is the standard normal CDF. This is valid for thresholds $x < S_0$ 
 
 Given a put option with strike $K$ and the option bid price $o_{bp}$ we pay, the payoff when the stock reaches price $P$ is:
 
-$$\text{PnL}(P) = \max(K - P,\; 0) - o_{bp}$$
+$$
+\text{PnL}(P) = \max(K - P, 0) - o_{bp}
+$$
 
 By mapping the threshold probabilities to the corresponding PnL values, we construct:
 
@@ -81,7 +89,9 @@ A risk-neutral option price is achieved when the expected PnL equals zero. Impor
 
 The expected PnL for a given option bid price $o_{bp}$ and stock buying threshold $T$ combines two scenarios:
 
-$$\text{PnL}_T = (1 - P_{\text{cum},T}) \cdot \max(K - S_0 - o_{bp},\; -o_{bp}) \;+\; P_{\text{cum},T} \cdot (K - T - o_{bp})$$
+$$
+\text{PnL}_T = (1 - P_{\text{cum},T}) \cdot \max(K - S_0 - o_{bp}, -o_{bp}) + P_{\text{cum},T} \cdot (K - T - o_{bp})
+$$
 
 where:
 - $P_{\text{cum},T}$ = probability of the stock reaching threshold $T$ at any point during the option's lifetime
